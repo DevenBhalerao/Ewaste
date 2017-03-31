@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.dev_n.ewaste.HomeActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/confirm_bt"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="51dp"
+            android:text="Add Product"
+            android:textColor="#ffffff"
+            android:theme="@style/MyButton" />
+
+        <Button
+            android:id="@+id/view_product_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/my_recycler_view"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="24dp"
+            android:text="Postpone"
+            android:textColor="#ffffff"
+            android:theme="@style/MyButton" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/confirm_bt"
+            android:layout_marginTop="82dp"
+            android:scrollbars="vertical" />
+
+    </RelativeLayout>
+</RelativeLayout>

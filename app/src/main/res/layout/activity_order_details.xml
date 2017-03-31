@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.dev_n.ewaste.OrderDetailsActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+
+    <TextView
+        android:id="@+id/order_pickup_time_label"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/items_label"
+        android:layout_below="@+id/items_label"
+        android:layout_marginTop="25dp"
+        android:text="Pickup Time : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/items_label"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/contact_label"
+        android:layout_below="@+id/contact_label"
+        android:layout_marginTop="25dp"
+        android:text="Items Count : "
+
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/contact_label"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/order_address_field"
+        android:layout_marginTop="25dp"
+        android:layout_toStartOf="@+id/order_address_field"
+        android:text="Contact No. : "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/address_label"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="150dp"
+        android:text="Address :"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/order_address_field"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/address_label"
+        android:layout_alignBottom="@+id/address_label"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="25dp"
+        android:layout_toEndOf="@+id/address_label"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/order_contact_field"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/contact_label"
+        android:layout_alignStart="@+id/order_address_field"
+        android:layout_marginTop="25dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/order_item_count_field"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/items_label"
+        android:layout_alignBottom="@+id/items_label"
+        android:layout_alignStart="@+id/order_contact_field"
+        android:layout_marginTop="25dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/order_pickup_time_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/order_pickup_time_label"
+        android:layout_alignEnd="@+id/order_item_count_field"
+        android:layout_alignStart="@+id/order_item_count_field"
+        android:layout_marginTop="25dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/approx_weight_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/order_pickup_time_label"
+        android:layout_below="@+id/order_pickup_time_label"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="25dp"
+        android:text="Approx. Weight"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/order_approx_weight_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/approx_weight_label"
+        android:layout_alignEnd="@+id/order_pickup_time_field"
+        android:layout_alignStart="@+id/order_pickup_time_field"
+        android:layout_marginTop="25dp"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/confirm_order_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/approx_weight_label"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="70dp"
+        android:text="Confirm"
+        android:textColor="#ffffff"
+        android:theme="@style/MyButton" />
+
+    <Button
+        android:id="@+id/order_reject_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/order_approx_weight_field"
+        android:layout_alignTop="@+id/confirm_order_bt"
+        android:layout_marginStart="30dp"
+        android:text="Reject"
+        android:textColor="#ffffff"
+        android:theme="@style/MyButton" />
+
+
+</RelativeLayout>
