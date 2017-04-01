@@ -13,6 +13,7 @@ import android.os.Bundle;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -35,7 +36,7 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
         ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
         mScannerView = new ZXingScannerView(this);
         contentFrame.addView(mScannerView);
-        sharedpreferences  = getSharedPreferences(HomeActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        sharedpreferences  = getSharedPreferences(RequestActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
         orderPosition = getIntent().getExtras().getInt("orderPosition");
     }

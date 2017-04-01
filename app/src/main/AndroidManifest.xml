@@ -3,13 +3,12 @@
     package="com.example.dev_n.ewaste">
 
     <uses-permission android:name="android.permission.CAMERA" />
+
     <permission
         android:name="com.example.dev_n.ewaste.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission
-        android:name="com.example.dev_n.ewaste.permission.C2D_MESSAGE" />
 
-
+    <uses-permission android:name="com.example.dev_n.ewaste.permission.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"
@@ -20,33 +19,23 @@
         <activity android:name=".SimpleScannerActivity" />
         <activity android:name=".BaseScannerActivity" />
         <activity android:name=".ProductDetailsActivity" />
-        <activity android:name=".HomeActivity">
-
-        </activity>
         <activity android:name=".BarcodeActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".OrderDetailsActivity" />
-
-        <activity android:name=".RequestActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".RequestActivity" />
         <activity android:name=".OrderActivity" />
-        <activity android:name=".LoginActivity"></activity>
-
+        <activity android:name=".LoginActivity" />
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.example.dev_n.ewaste" />
             </intent-filter>
         </receiver>
-
 
         <!-- Firebase Notifications -->
         <service android:name=".service.MyFirebaseMessagingService">
@@ -54,7 +43,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".service.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -62,7 +50,18 @@
         </service>
         <!-- ./Firebase Notifications -->
 
+        <activity android:name=".CompletedRequests" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".RejectedRequests"></activity>
     </application>
 
 </manifest>

@@ -9,35 +9,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/request_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-
-            android:scrollbars="vertical"
-            android:layout_below="@+id/toolbar"
-            android:layout_alignParentStart="true" />
-
-    </RelativeLayout>
-
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navigation_view"
-        android:layout_height="match_parent"
-        android:layout_width="wrap_content"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/drawer_menu"/>
 
 
 </android.support.v4.widget.DrawerLayout>

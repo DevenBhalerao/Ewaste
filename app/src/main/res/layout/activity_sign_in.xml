@@ -12,7 +12,8 @@
         android:id="@+id/email_address"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+       >
 
         <EditText
             android:id="@+id/your_email_address"
@@ -20,14 +21,16 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Email Address"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/password"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        >
 
         <EditText
             android:id="@+id/create_new_password"
@@ -35,6 +38,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Password"
+            android:textColor="@color/colorPrimaryLight"
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
@@ -43,8 +47,8 @@
         android:id="@+id/submit_login_bt"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Sign Up"
+        android:layout_marginTop="60dp"
+        android:text="Sign In"
         android:textColor="#ffffff"
         android:theme="@style/MyButton" />
 

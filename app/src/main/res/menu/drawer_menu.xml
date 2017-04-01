@@ -24,11 +24,11 @@
 
     <item
         android:id="@+id/nav_log_in"
-        android:title="nav_log_in"
+        android:title="Log In"
         android:visible="true" />
     <item
         android:id="@+id/nav_log_out"
-        android:title="Settings"
+        android:title="Log Out"
         android:visible="false" />
 
 
