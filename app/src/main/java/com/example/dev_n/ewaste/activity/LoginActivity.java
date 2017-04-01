@@ -1,6 +1,5 @@
-package com.example.dev_n.ewaste;
+package com.example.dev_n.ewaste.activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +12,7 @@ import android.widget.EditText;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.dev_n.ewaste.R;
 import com.example.dev_n.ewaste.Volley.LoginRequest;
 import com.example.dev_n.ewaste.app.Config;
 
@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
+                            Log.e(TAG, response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
                                 String collectorID = jsonResponse.getString("collector_id");
@@ -57,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = pref.edit();
                                 editor.putString("collector_id", collectorID);
                                 editor.apply();
-                                Log.e(TAG, response);
+
 
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);

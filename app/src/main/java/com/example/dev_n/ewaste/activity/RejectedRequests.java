@@ -1,22 +1,15 @@
-package com.example.dev_n.ewaste;
+package com.example.dev_n.ewaste.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.dev_n.ewaste.R;
 
-public class ProductDetailsActivity extends AppCompatActivity {
-
-
+public class RejectedRequests extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_details);
-
-
-
-
-
-        
+        setContentView(R.layout.activity_rejected_requests);
     }
 }

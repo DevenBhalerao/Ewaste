@@ -7,7 +7,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.dev_n.ewaste.OrderDetailsActivity">
+    tools:context="com.example.dev_n.ewaste.activity.OrderDetailsActivity">
 
     <include
         android:id="@+id/toolbar"

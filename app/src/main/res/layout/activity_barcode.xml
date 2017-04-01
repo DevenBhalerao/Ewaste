@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.dev_n.ewaste.BarcodeActivity">
+    tools:context="com.example.dev_n.ewaste.activity.BarcodeActivity">
 
 </android.support.constraint.ConstraintLayout>

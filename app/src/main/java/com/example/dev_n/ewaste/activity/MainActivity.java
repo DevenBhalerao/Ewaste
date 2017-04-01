@@ -1,4 +1,4 @@
-package com.example.dev_n.ewaste;
+package com.example.dev_n.ewaste.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.dev_n.ewaste.R;
 import com.example.dev_n.ewaste.app.Config;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -97,8 +98,6 @@ public class MainActivity extends AppCompatActivity
         };
         displayFirebaseRegId();
 
-
-
     }
 
     private void displayFirebaseRegId() {
@@ -109,8 +108,6 @@ public class MainActivity extends AppCompatActivity
 
 
     }
-
-
 
     @Override
     public void onBackPressed() {

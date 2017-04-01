@@ -1,12 +1,11 @@
-package com.example.dev_n.ewaste;
+package com.example.dev_n.ewaste.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,21 +13,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.Button;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.example.dev_n.ewaste.R;
+import com.example.dev_n.ewaste.Volley.LoginRequest;
+import com.example.dev_n.ewaste.Volley.RequestFetch;
 import com.example.dev_n.ewaste.app.Config;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.mikepenz.materialdrawer.AccountHeader;
-import com.mikepenz.materialdrawer.AccountHeaderBuilder;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -42,6 +39,7 @@ public class RequestActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private Context context;
 
+    private Button submitOrdersButton;
 
     private Toolbar mToolbar;
 
@@ -63,6 +61,7 @@ public class RequestActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Pending Requests");
+
 
         mRecyclerView = (RecyclerView) findViewById(R.id.request_recycler_view);
 
@@ -113,7 +112,39 @@ public class RequestActivity extends AppCompatActivity {
         displayFirebaseRegId();
 
 
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    Log.e(TAG, response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if (success) {
+                        String collectorID = jsonResponse.getString("collector_id");
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("collector_id", collectorID);
+                        editor.apply();
 
+
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                        builder.setMessage("Login Failed")
+                                .setNegativeButton("Retry", null)
+                                .create()
+                                .show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
+        String collectorId = pref.getString("collector_id", null);
+        RequestFetch productRequest = new RequestFetch(collectorId, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(RequestActivity.this);
+        queue.add(productRequest);
 
     }
 

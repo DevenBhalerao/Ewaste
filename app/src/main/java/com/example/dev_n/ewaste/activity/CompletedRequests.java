@@ -1,7 +1,9 @@
-package com.example.dev_n.ewaste;
+package com.example.dev_n.ewaste.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.dev_n.ewaste.R;
 
 public class CompletedRequests extends AppCompatActivity {
 

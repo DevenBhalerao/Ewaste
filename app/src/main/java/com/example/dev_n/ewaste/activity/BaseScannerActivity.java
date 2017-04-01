@@ -1,9 +1,11 @@
-package com.example.dev_n.ewaste;
+package com.example.dev_n.ewaste.activity;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import com.example.dev_n.ewaste.R;
 
 public class BaseScannerActivity extends AppCompatActivity {
     public void setupToolbar() {

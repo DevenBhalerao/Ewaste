@@ -1,12 +1,9 @@
-package com.example.dev_n.ewaste;
+package com.example.dev_n.ewaste.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.nfc.Tag;
-import android.support.annotation.IntegerRes;
-import android.support.design.widget.NavigationView;
+import android.content.SharedPreferences;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,23 +11,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.Button;
 
-import com.mikepenz.materialdrawer.AccountHeader;
-import com.mikepenz.materialdrawer.AccountHeaderBuilder;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.example.dev_n.ewaste.R;
+import com.example.dev_n.ewaste.Volley.LoginRequest;
+import com.example.dev_n.ewaste.Volley.OrderSend;
+import com.example.dev_n.ewaste.app.Config;
 
-import java.lang.reflect.Array;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.dev_n.ewaste.R.id.toolbar;
 
@@ -50,6 +47,8 @@ public class OrderActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
 
+    private Button confirmBt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -66,6 +65,8 @@ public class OrderActivity extends AppCompatActivity {
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+
+        confirmBt = (Button) findViewById(R.id.confirm_bt);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -110,7 +111,54 @@ public class OrderActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
 
+        confirmBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
+                String regId = pref.getString("regId", null);
+                final String deviceID = regId;
+
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            Log.e(TAG, response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            if (success) {
+                                String collectorID = jsonResponse.getString("collector_id");
+                                SharedPreferences pref = getApplicationContext().getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putString("collector_id", collectorID);
+                                editor.apply();
+
+
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+                                builder.setMessage("Login Failed")
+                                        .setNegativeButton("Retry", null)
+                                        .create()
+                                        .show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
+                String userid = "12345";
+
+                String collectorID = pref.getString("collector_id", null);
+                OrderSend loginRequest = new OrderSend(userid, collectorID, al, responseListener);
+
+
+                RequestQueue queue = Volley.newRequestQueue(OrderActivity.this);
+                queue.add(loginRequest);
+            }
+        });
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

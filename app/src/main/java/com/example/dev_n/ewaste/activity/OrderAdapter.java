@@ -1,8 +1,7 @@
-package com.example.dev_n.ewaste;
+package com.example.dev_n.ewaste.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 
 import android.content.Intent;
@@ -16,9 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.lang.reflect.Array;
+import com.example.dev_n.ewaste.R;
+
 import java.util.ArrayList;
 
 /**

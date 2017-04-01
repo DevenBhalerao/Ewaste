@@ -1,10 +1,10 @@
-package com.example.dev_n.ewaste;
+package com.example.dev_n.ewaste.activity;
 
 /**
  * Created by Dev_N on 25-03-2017.
  */
 
-class OrderData {
+public class OrderData {
 
     private String orderId;
     private String orderName;

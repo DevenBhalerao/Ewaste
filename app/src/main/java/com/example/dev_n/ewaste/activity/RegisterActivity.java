@@ -1,4 +1,4 @@
-package com.example.dev_n.ewaste;
+package com.example.dev_n.ewaste.activity;
 
 import android.content.Context;
 import android.support.design.widget.NavigationView;
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.dev_n.ewaste.R;
 
 import static com.example.dev_n.ewaste.R.id.toolbar;
 

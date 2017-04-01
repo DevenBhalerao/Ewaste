@@ -1,4 +1,4 @@
-package com.example.dev_n.ewaste;
+package com.example.dev_n.ewaste.activity;
 
 
 import com.onbarcode.barcode.android.*;
