@@ -73,7 +73,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public OrderAdapter(ArrayList<OrderData> myDataset, Context context) {
         mDataset = myDataset;
         this.context = context;
-         sharedPref = ((Activity)context).getPreferences(Context.MODE_PRIVATE);
+         sharedPref = ((Activity)context).getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
     }
 
     // Create new views (invoked by the layout manager)
@@ -107,7 +107,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             public void onClick(View view) {
                 Intent it = new Intent(context, SimpleScannerActivity.class);
                 it.putExtra("orderPosition", position);
-
+                
                 ((Activity)context).startActivity(it);
 
             }

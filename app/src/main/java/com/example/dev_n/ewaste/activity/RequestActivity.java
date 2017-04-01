@@ -112,40 +112,6 @@ public class RequestActivity extends AppCompatActivity {
         displayFirebaseRegId();
 
 
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    Log.e(TAG, response);
-                    boolean success = jsonResponse.getBoolean("success");
-                    if (success) {
-                        String collectorID = jsonResponse.getString("collector_id");
-                        SharedPreferences pref = getApplicationContext().getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("collector_id", collectorID);
-                        editor.apply();
-
-
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                        builder.setMessage("Login Failed")
-                                .setNegativeButton("Retry", null)
-                                .create()
-                                .show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
-        String collectorId = pref.getString("collector_id", null);
-        RequestFetch productRequest = new RequestFetch(collectorId, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(RequestActivity.this);
-        queue.add(productRequest);
-
     }
 
     private void displayFirebaseRegId() {

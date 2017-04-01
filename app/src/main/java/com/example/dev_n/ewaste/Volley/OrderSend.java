@@ -24,19 +24,20 @@ import java.util.Map;
 
 public class OrderSend extends StringRequest {
 
-    private static final String ORDER_REQUEST_URL = "http://dietnlss.000webhostapp.com/Login.php";
+    private static final String ORDER_REQUEST_URL = "http://smartewaste-com.stackstaging.com/Foobar404Gov/api/recieve-product-details.php";
     private Map<String, String> params;
     private String TAG = OrderSend.class.getSimpleName();
 
-    public OrderSend(String userid, String collectorID, ArrayList<OrderData> orderList, Response.Listener<String> listener) {
+    public OrderSend(String userid, String collectorID, ArrayList<OrderData> orderList,Response.Listener<String> listener) {
         super(Method.POST, ORDER_REQUEST_URL, listener, null);
         params = new HashMap<>();
         params.put("collectorID", collectorID);
+        params.put("count", Integer.toString(orderList.size()));
 
 
         for (int i = 0; i < orderList.size(); i++) {
 
-            params.put("products[" + i + "]", orderList.get(i).getOrderCount() + "," + orderList.get(i).getOrderType());
+            params.put( Integer.toString(i) , orderList.get(i).getOrderCount() + "," + orderList.get(i).getOrderType()+ ", " +orderList.get(i).getOrderId());
         }
 
 

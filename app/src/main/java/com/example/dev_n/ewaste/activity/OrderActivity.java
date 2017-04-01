@@ -116,8 +116,6 @@ public class OrderActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 SharedPreferences pref = getApplicationContext().getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
-                String regId = pref.getString("regId", null);
-                final String deviceID = regId;
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -150,9 +148,9 @@ public class OrderActivity extends AppCompatActivity {
                 String userid = "12345";
 
                 String collectorID = pref.getString("collector_id", null);
+
+
                 OrderSend loginRequest = new OrderSend(userid, collectorID, al, responseListener);
-
-
                 RequestQueue queue = Volley.newRequestQueue(OrderActivity.this);
                 queue.add(loginRequest);
             }
