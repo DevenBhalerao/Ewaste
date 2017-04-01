@@ -21,10 +21,14 @@ import com.example.dev_n.ewaste.R;
 import com.example.dev_n.ewaste.Volley.LoginRequest;
 import com.example.dev_n.ewaste.Volley.OrderSend;
 import com.example.dev_n.ewaste.app.Config;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,12 +53,19 @@ public class OrderActivity extends AppCompatActivity {
 
     private Button confirmBt;
 
+    private SharedPreferences pref;
+
+    private ArrayList<OrderData> items;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        pref = getApplicationContext().getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
+        int pos = getIntent().getIntExtra("position", 0);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         mToolbar = (Toolbar) findViewById(toolbar);
@@ -77,37 +88,43 @@ public class OrderActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        OrderData o1 = new OrderData("1", "2", "frifge", "fridge");
-        OrderData o2 = new OrderData("1", "2", "frifge", "fridge");
-        OrderData o3 = new OrderData("1", "2", "frifge", "fridge");
-        OrderData o4 = new OrderData("1", "2", "frifge", "fridge");
 
-        al = new ArrayList<>();
-        al.add(o1);
-        al.add(o2);
-        al.add(o3);
-        al.add(o4);
 
+        Gson gson = new GsonBuilder().create();
+        ArrayList<RequestData> list = gson.fromJson(pref.getString("request_data", null), new TypeToken<ArrayList<RequestData>>() {}.getType());
+        RequestData data = list.get(pos);
+        items = data.getOrderItems();
 
         Bundle IdData = getIntent().getExtras();
         if (IdData != null) {
             IdMap = new HashMap<>();
             int selectedOrderPosition = 0;
-            for (int i = 0; i < al.size(); i++) {
+            for (int i = 0; i < items.size(); i++) {
                 Log.d(TAG, "id data for " + i + " is " + IdData.getString("scannedID" + i));
                 if (IdData.getString("scannedID" + i) != null) {
                     selectedOrderPosition = i;
                 }
             }
 
-            al.get(selectedOrderPosition).setOrderId(IdData.getString("scannedID" + selectedOrderPosition));
+            items.get(selectedOrderPosition).setOrderId(IdData.getString("scannedID" + selectedOrderPosition));
+            data.setOrderItems(items);
+            list.set(pos, data);
+            Type type = new TypeToken<ArrayList<RequestData>>() {
+            }.getType();
+            String json = gson.toJson(list, type);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("request_data", json);
+            editor.apply();
+
+
+
 
         } else {
             Log.d(TAG, "data is nul");
         }
 
         // specify an adapter (see also next example)
-        mAdapter = new OrderAdapter(al, this);
+        mAdapter = new OrderAdapter(items, pos,this);
         mRecyclerView.setAdapter(mAdapter);
 
 
@@ -150,7 +167,7 @@ public class OrderActivity extends AppCompatActivity {
                 String collectorID = pref.getString("collector_id", null);
 
 
-                OrderSend loginRequest = new OrderSend(userid, collectorID, al, responseListener);
+                OrderSend loginRequest = new OrderSend(userid, collectorID, items, responseListener);
 
                 RequestQueue queue = Volley.newRequestQueue(OrderActivity.this);
                 queue.add(loginRequest);
@@ -159,20 +176,6 @@ public class OrderActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == OrderAdapter.CAMERA_REQUEST) {
-
-            if (resultCode == RESULT_OK) {
-                al.get(Integer.parseInt(data.getExtras().getString("orderPosition"))).setOrderId(data.getExtras().getString("result"));
-                mAdapter = new OrderAdapter(al, getApplication().getBaseContext());
-                mRecyclerView.setAdapter(mAdapter);
-
-
-            }
-        }
-    }
 
 
 }

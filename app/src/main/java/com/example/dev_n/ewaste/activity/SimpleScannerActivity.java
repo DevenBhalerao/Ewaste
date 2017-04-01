@@ -23,13 +23,14 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
     private ZXingScannerView mScannerView;
     private int orderPosition;
     private SharedPreferences sharedpreferences;
+    private int pos;
 
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
         setContentView(R.layout.activity_simple_scanner);
         setupToolbar();
-
+        pos = getIntent().getIntExtra("position",0);
         ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
         mScannerView = new ZXingScannerView(this);
         contentFrame.addView(mScannerView);
@@ -66,6 +67,7 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
         Intent intent = new Intent(this, OrderActivity.class);
         Log.d("OrderActivity", "intent is scannedID"+orderPosition);
         intent.putExtra("scannedID"+orderPosition, rawResult.getText());
+        intent.putExtra("position", pos);
         startActivity(intent);
         // Note:
         // * Wait 2 seconds to resume the preview.

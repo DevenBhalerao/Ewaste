@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:layout_margin="5dp"
         android:layout_weight="0.68"
-        card_view:cardCornerRadius="4dp"
-        android:layout_margin="5dp">
+        card_view:cardCornerRadius="4dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -33,20 +33,11 @@
                 android:text="ID: " />
 
             <TextView
-                android:id="@+id/order_fragment_Name_label"
+                android:id="@+id/order_fragment_Type_label"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/order_fragment_ID_label"
                 android:layout_below="@+id/order_fragment_ID_label"
-                android:layout_marginTop="30dp"
-                android:text="Name: " />
-
-            <TextView
-                android:id="@+id/order_fragment_Type_label"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/order_fragment_Name_label"
-                android:layout_below="@+id/order_fragment_Name_label"
                 android:layout_marginTop="21dp"
                 android:text="Type : " />
 
@@ -63,17 +54,10 @@
                 android:id="@+id/order_fragment_ID_field"
                 android:layout_width="145dp"
                 android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/order_fragment_ID_label"
                 android:layout_marginStart="17dp"
-                android:layout_toEndOf="@+id/order_fragment_ID_label"
-                android:layout_alignTop="@+id/order_fragment_ID_label" />
+                android:layout_toEndOf="@+id/order_fragment_ID_label" />
 
-            <TextView
-                android:id="@+id/order_fragment_Name_field"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/order_fragment_Name_label"
-                android:layout_alignBottom="@+id/order_fragment_Name_label"
-                android:layout_alignStart="@+id/order_fragment_ID_field" />
 
             <TextView
                 android:id="@+id/order_fragment_Type_field"
@@ -81,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/order_fragment_Type_label"
                 android:layout_alignBottom="@+id/order_fragment_Type_label"
-                android:layout_alignStart="@+id/order_fragment_Name_field" />
+                android:layout_alignStart="@+id/order_fragment_ID_field" />
 
             <TextView
                 android:id="@+id/order_fragment_Count_field"
@@ -90,15 +74,16 @@
                 android:layout_alignBaseline="@+id/order_fragment_Count_label"
                 android:layout_alignBottom="@+id/order_fragment_Count_label"
                 android:layout_alignStart="@+id/order_fragment_ID_field"
-                android:layout_marginBottom="15dp"/>
+                android:layout_marginBottom="15dp" />
 
             <ImageButton
                 android:id="@+id/scan_barcode_bt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/order_fragment_Name_field"
-                android:layout_alignParentTop="true"
-                card_view:srcCompat="@android:drawable/ic_menu_camera" />
+                card_view:srcCompat="@android:drawable/ic_menu_camera"
+                android:layout_above="@+id/order_fragment_Type_field"
+                android:layout_toEndOf="@+id/order_fragment_ID_field"
+                android:layout_marginStart="35dp" />
 
 
         </RelativeLayout>

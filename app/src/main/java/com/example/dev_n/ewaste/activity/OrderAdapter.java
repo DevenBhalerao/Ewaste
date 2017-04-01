@@ -28,7 +28,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     private ArrayList<OrderData> mDataset;
     private static Context context;
     public static final int CAMERA_REQUEST = 1;
-    SharedPreferences sharedPref ;
+    SharedPreferences sharedPref;
+    private int pos;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -36,7 +37,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView IdView;
-        public TextView nameView;
         public TextView countView;
         public TextView typeView;
         public ImageButton scanBarcodeButton;
@@ -46,11 +46,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             super(v);
             //mTextView = v;
             IdView = (TextView) v.findViewById(R.id.order_fragment_ID_field);
-            nameView = (TextView) v.findViewById(R.id.order_fragment_Name_field);
+
             countView = (TextView) v.findViewById(R.id.order_fragment_Count_field);
             typeView = (TextView) v.findViewById(R.id.order_fragment_Type_field);
             scanBarcodeButton = (ImageButton) v.findViewById(R.id.scan_barcode_bt);
-
 
 
             scanBarcodeButton.setOnClickListener(new View.OnClickListener() {
@@ -70,10 +69,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public OrderAdapter(ArrayList<OrderData> myDataset, Context context) {
+    public OrderAdapter(ArrayList<OrderData> myDataset, int pos, Context context) {
         mDataset = myDataset;
         this.context = context;
-         sharedPref = ((Activity)context).getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
+        sharedPref = ((Activity) context).getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
+        this.pos = pos;
     }
 
     // Create new views (invoked by the layout manager)
@@ -95,20 +95,24 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-
-        holder.IdView.setText(mDataset.get(position).getOrderId());
+        if (!(mDataset.get(position).getOrderId().equals("")) || !(mDataset.get(position).getOrderId().length() <= 0)) {
+            holder.IdView.setText(mDataset.get(position).getOrderId());
+        }
+        else{
+            holder.IdView.setText("NOT SET");
+        }
         holder.typeView.setText(mDataset.get(position).getOrderType());
         holder.countView.setText(mDataset.get(position).getOrderCount());
-        holder.nameView.setText(mDataset.get(position).getOrderName());
 
 
         holder.scanBarcodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(context, SimpleScannerActivity.class);
+                it.putExtra("position", pos);
                 it.putExtra("orderPosition", position);
-                
-                ((Activity)context).startActivity(it);
+
+                ((Activity) context).startActivity(it);
 
             }
         });
@@ -121,8 +125,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public int getItemCount() {
         return mDataset.size();
     }
-
-
 
 
 }

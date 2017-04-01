@@ -36,12 +36,15 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
     private static int CAMERA_PERMISSION;
 
+    private String TAG = OrderDetailsActivity.class.getSimpleName();
+
     private Toolbar mToolbar;
 
     private DrawerLayout drawerLayout;
 
     private Context context = this;
     SharedPreferences pref;
+    private int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +52,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
          pref = getApplicationContext().getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
         setContentView(R.layout.activity_order_details);
 
-        int pos = getIntent().getExtras().getInt("position");
-
+        pos = getIntent().getExtras().getInt("position");
+        Log.e(TAG, ""+pos);
 
         addressView = (TextView) findViewById(R.id.order_address_field);
         contactNoView = (TextView) findViewById(R.id.order_contact_field);
@@ -89,6 +92,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                             new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
                 } else {
                     Intent intent = new Intent(context, OrderActivity.class);
+                    intent.putExtra("position", pos);
                     startActivity(intent);
                 }
             }
@@ -103,6 +107,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     Intent intent = new Intent(this, OrderActivity.class);
+                    intent.putExtra("position", pos);
                     startActivity(intent);
 
                 } else {
