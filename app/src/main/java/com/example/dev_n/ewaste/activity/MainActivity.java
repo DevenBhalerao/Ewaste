@@ -26,10 +26,14 @@ import com.example.dev_n.ewaste.R;
 import com.example.dev_n.ewaste.Volley.RequestFetch;
 import com.example.dev_n.ewaste.app.Config;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -42,14 +46,19 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = RequestActivity.class.getSimpleName();
 
+    ArrayList<RequestData> requestDatas;
+
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        final SharedPreferences pref = getApplicationContext().getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Pending Requests");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -60,34 +69,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.request_recycler_view);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        RequestData rd = new RequestData("1", "sion", "20kg");
-        RequestData rd1 = new RequestData("2", "sion", "20kg");
-        RequestData rd3 = new RequestData("3", "sion", "20kg");
-        RequestData rd4 = new RequestData("4", "sion", "20kg");
-        RequestData rd5 = new RequestData("5", "sion", "20kg");
-
-        ArrayList<RequestData> al = new ArrayList<>();
-        al.add(rd);
-        al.add(rd1);
-        al.add(rd3);
-        al.add(rd4);
-        al.add(rd5);
-
-        mAdapter = new RequestAdapter(al, this);
-        mRecyclerView.setAdapter(mAdapter);
 
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -107,22 +88,64 @@ public class MainActivity extends AppCompatActivity
         displayFirebaseRegId();
 
 
-
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
+                    int count = 0;
                     JSONObject jsonResponse = new JSONObject(response);
-                    Log.e(TAG, response);
-                    boolean success = jsonResponse.getBoolean("success");
-                    if (success) {
-                        String collectorID = jsonResponse.getString("collector_id");
-                        SharedPreferences pref = getApplicationContext().getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("collector_id", collectorID);
-                        editor.apply();
+                    requestDatas = new ArrayList<>();
+                    if (((String) jsonResponse.getString("success")).equals("true")) {
+                        while (jsonResponse.getJSONObject(Integer.toString(count)) != null && !(jsonResponse.getJSONObject(Integer.toString(count)).getString("success")).equals(true)) {
+                            JSONObject jobject = jsonResponse.getJSONObject(Integer.toString(count));
+
+                            Log.e(TAG, "hmm " + jobject.toString());
+
+                            RequestData requestObject = new RequestData();
+                            requestObject.setAddress(jobject.getString("address"));
+                            requestObject.setContactNo(jobject.getString("contact_no"));
+                            requestObject.setItemCOunt(jobject.getString("count"));
+                            JSONArray arra = new JSONArray(jobject.getString("products"));
+                            ArrayList<OrderData> productList = new ArrayList<>();
+                            for (int i = 0; i < arra.length(); i++) {
+                                OrderData o = new OrderData();
+                                o.setOrderId("NOT SET");
+                                o.setOrderType(arra.getJSONObject(i).getString("product_type"));
+                                o.setOrderCount(arra.getJSONObject(i).getString("quantity"));
+                                productList.add(o);
+                                Log.e(TAG, " " + i);
+                            }
+                            requestObject.setOrderItems(productList);
+                            requestDatas.add(requestObject);
+                            Log.e(TAG, " lol" + requestDatas.size());
 
 
+//                        mRecyclerView = (RecyclerView) findViewById(R.id.request_recycler_view);
+
+                            // use this setting to improve performance if you know that changes
+                            // in content do not change the layout size of the RecyclerView
+//                        mRecyclerView.setHasFixedSize(true);
+//
+//                        mAdapter = new RequestAdapter(requestDatas, context);
+//                        mRecyclerView.setAdapter(mAdapter);
+//
+//                        // use a linear layout manager
+//                        mLayoutManager = new LinearLayoutManager(context);
+//                        mRecyclerView.setLayoutManager(mLayoutManager);
+//                        mRecyclerView.setHasFixedSize(true);
+//                        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            count++;
+                            Log.e(TAG, "count" + count);
+                            Gson gson = new Gson();
+                            Type type = new TypeToken<ArrayList<RequestData>>() {
+                            }.getType();
+                            String json = gson.toJson(requestDatas, type);
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString("request_data", json);
+                            editor.apply();
+                            Log.e(TAG, json);
+
+                        }
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                         builder.setMessage("Login Failed")
@@ -136,12 +159,42 @@ public class MainActivity extends AppCompatActivity
             }
         };
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
+
         String collectorId = pref.getString("collector_id", null);
-        RequestFetch productRequest = new RequestFetch(collectorId, responseListener);
+        //RequestFetch productRequest = new RequestFetch(collectorId, responseListener);
+        RequestFetch productRequest = new RequestFetch("31", responseListener);
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         queue.add(productRequest);
 
+
+        RequestData rd = new RequestData("1", "sion", "20kg");
+        RequestData rd1 = new RequestData("2", "sion", "20kg");
+        RequestData rd3 = new RequestData("3", "sion", "20kg");
+        RequestData rd4 = new RequestData("4", "sion", "20kg");
+        RequestData rd5 = new RequestData("5", "sion", "20kg");
+
+        ArrayList<RequestData> al = new ArrayList<>();
+        al.add(rd);
+        al.add(rd1);
+        al.add(rd3);
+        al.add(rd4);
+        al.add(rd5);
+
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.request_recycler_view);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+
+        mAdapter = new RequestAdapter(al, context);
+        mRecyclerView.setAdapter(mAdapter);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(context);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
     }
 

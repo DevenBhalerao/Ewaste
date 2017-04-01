@@ -151,6 +151,7 @@ public class OrderActivity extends AppCompatActivity {
 
 
                 OrderSend loginRequest = new OrderSend(userid, collectorID, al, responseListener);
+
                 RequestQueue queue = Volley.newRequestQueue(OrderActivity.this);
                 queue.add(loginRequest);
             }

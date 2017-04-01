@@ -14,11 +14,24 @@ public class RequestData {
     private ArrayList<OrderData> orderItems;
     private String approxWeight;
     private String pickupTime;
+    private String itemCOunt;
+
+    public String getItemCOunt() {
+        return itemCOunt;
+    }
+
+    public void setItemCOunt(String itemCOunt) {
+        this.itemCOunt = itemCOunt;
+    }
 
     public RequestData(String ID, String address, String approxWeight) {
         this.ID = ID;
         this.address = address;
         this.approxWeight = approxWeight;
+    }
+
+    public RequestData(){
+
     }
 
     public String getID() {

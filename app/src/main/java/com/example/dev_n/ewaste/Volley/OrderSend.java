@@ -31,7 +31,7 @@ public class OrderSend extends StringRequest {
     public OrderSend(String userid, String collectorID, ArrayList<OrderData> orderList,Response.Listener<String> listener) {
         super(Method.POST, ORDER_REQUEST_URL, listener, null);
         params = new HashMap<>();
-        params.put("collectorID", collectorID);
+        params.put("collector_id", collectorID);
         params.put("count", Integer.toString(orderList.size()));
 
 
@@ -44,8 +44,6 @@ public class OrderSend extends StringRequest {
         for (String key : params.keySet()) {
             Log.e(TAG, key + " " + params.get(key));
         }
-
-
     }
 
     @Override

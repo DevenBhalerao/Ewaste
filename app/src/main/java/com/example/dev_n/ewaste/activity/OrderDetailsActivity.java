@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -11,12 +12,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dev_n.ewaste.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 
 public class OrderDetailsActivity extends AppCompatActivity {
 
@@ -34,10 +41,12 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
 
     private Context context = this;
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+         pref = getApplicationContext().getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
         setContentView(R.layout.activity_order_details);
 
 
@@ -55,6 +64,10 @@ public class OrderDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Order Details");
 
+
+        Gson gson = new GsonBuilder().create();
+        ArrayList<ArrayList<String>> list = gson.fromJson(pref.getString("request_data", null), new TypeToken<ArrayList<RequestData>>() {}.getType());
+        Log.e(OrderDetailsActivity.class.toString(), ""+ list.size());
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override

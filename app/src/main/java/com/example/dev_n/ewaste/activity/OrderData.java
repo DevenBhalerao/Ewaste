@@ -20,6 +20,10 @@ public class OrderData {
 
     }
 
+    public OrderData(){
+
+    }
+
     public String getOrderId() {
         return orderId;
     }

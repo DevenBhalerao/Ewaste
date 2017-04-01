@@ -23,7 +23,7 @@ public class RequestFetch extends StringRequest {
         super(Method.POST, ORDER_REQUEST_URL, listener, null);
         Log.e(TAG, collectorID);
         params = new HashMap<>();
-        params.put("collectorID", collectorID);
+        params.put("collector_id", collectorID);
 
     }
 
