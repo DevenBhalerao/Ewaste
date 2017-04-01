@@ -105,6 +105,8 @@ public class MainActivity extends AppCompatActivity
                             requestObject.setAddress(jobject.getString("address"));
                             requestObject.setContactNo(jobject.getString("contact_no"));
                             requestObject.setItemCOunt(jobject.getString("count"));
+                            requestObject.setApproxWeight(jobject.getString("count"));
+                            requestObject.setID(""+count);
                             JSONArray arra = new JSONArray(jobject.getString("products"));
                             ArrayList<OrderData> productList = new ArrayList<>();
                             for (int i = 0; i < arra.length(); i++) {
@@ -120,20 +122,20 @@ public class MainActivity extends AppCompatActivity
                             Log.e(TAG, " lol" + requestDatas.size());
 
 
-//                        mRecyclerView = (RecyclerView) findViewById(R.id.request_recycler_view);
+                            mRecyclerView = (RecyclerView) findViewById(R.id.request_recycler_view);
 
                             // use this setting to improve performance if you know that changes
                             // in content do not change the layout size of the RecyclerView
-//                        mRecyclerView.setHasFixedSize(true);
-//
-//                        mAdapter = new RequestAdapter(requestDatas, context);
-//                        mRecyclerView.setAdapter(mAdapter);
-//
-//                        // use a linear layout manager
-//                        mLayoutManager = new LinearLayoutManager(context);
-//                        mRecyclerView.setLayoutManager(mLayoutManager);
-//                        mRecyclerView.setHasFixedSize(true);
-//                        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            mRecyclerView.setHasFixedSize(true);
+
+                            mAdapter = new RequestAdapter(requestDatas, context);
+                            mRecyclerView.setAdapter(mAdapter);
+
+                            // use a linear layout manager
+                            mLayoutManager = new LinearLayoutManager(context);
+                            mRecyclerView.setLayoutManager(mLayoutManager);
+                            mRecyclerView.setHasFixedSize(true);
+                            mRecyclerView.setItemAnimator(new DefaultItemAnimator());
                             count++;
                             Log.e(TAG, "count" + count);
                             Gson gson = new Gson();
@@ -167,34 +169,34 @@ public class MainActivity extends AppCompatActivity
         queue.add(productRequest);
 
 
-        RequestData rd = new RequestData("1", "sion", "20kg");
-        RequestData rd1 = new RequestData("2", "sion", "20kg");
-        RequestData rd3 = new RequestData("3", "sion", "20kg");
-        RequestData rd4 = new RequestData("4", "sion", "20kg");
-        RequestData rd5 = new RequestData("5", "sion", "20kg");
-
-        ArrayList<RequestData> al = new ArrayList<>();
-        al.add(rd);
-        al.add(rd1);
-        al.add(rd3);
-        al.add(rd4);
-        al.add(rd5);
-
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.request_recycler_view);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
-        mAdapter = new RequestAdapter(al, context);
-        mRecyclerView.setAdapter(mAdapter);
-
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(context);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//        RequestData rd = new RequestData("1", "sion", "20kg");
+//        RequestData rd1 = new RequestData("2", "sion", "20kg");
+//        RequestData rd3 = new RequestData("3", "sion", "20kg");
+//        RequestData rd4 = new RequestData("4", "sion", "20kg");
+//        RequestData rd5 = new RequestData("5", "sion", "20kg");
+//
+//        ArrayList<RequestData> al = new ArrayList<>();
+//        al.add(rd);
+//        al.add(rd1);
+//        al.add(rd3);
+//        al.add(rd4);
+//        al.add(rd5);
+//
+//
+//        mRecyclerView = (RecyclerView) findViewById(R.id.request_recycler_view);
+//
+//        // use this setting to improve performance if you know that changes
+//        // in content do not change the layout size of the RecyclerView
+//        mRecyclerView.setHasFixedSize(true);
+//
+//        mAdapter = new RequestAdapter(al, context);
+//        mRecyclerView.setAdapter(mAdapter);
+//
+//        // use a linear layout manager
+//        mLayoutManager = new LinearLayoutManager(context);
+//        mRecyclerView.setLayoutManager(mLayoutManager);
+//        mRecyclerView.setHasFixedSize(true);
+//        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
     }
 

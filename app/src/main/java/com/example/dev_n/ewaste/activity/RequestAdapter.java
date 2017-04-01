@@ -29,7 +29,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         // each data item is just a string in this case
         public TextView IdView;
         public TextView addressView;
-        public TextView weightView;
+        public TextView countView;
         private Button viewRequestButton;
 
         public ViewHolder(View v) {
@@ -37,7 +37,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             //mTextView = v;
             IdView = (TextView) v.findViewById(R.id.request_fragment_ID_field);
             addressView = (TextView) v.findViewById(R.id.request_fragment_Address_field);
-            weightView = (TextView) v.findViewById(R.id.request_fragment_Items_Weight_field);
+            countView = (TextView) v.findViewById(R.id.request_fragment_Items_Count_field);
             viewRequestButton = (Button) v.findViewById(R.id.view_request_bt);
 
         }
@@ -64,17 +64,18 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.IdView.setText(mDataset.get(position).getID());
         holder.addressView.setText(mDataset.get(position).getAddress());
-        holder.weightView.setText(mDataset.get(position).getApproxWeight());
+        holder.countView.setText(mDataset.get(position).getApproxWeight());
 
         holder.viewRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(context ,OrderDetailsActivity.class);
+                it.putExtra("position", position);
                 context.startActivity(it);
             }
         });

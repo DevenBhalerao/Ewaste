@@ -49,11 +49,16 @@ public class OrderDetailsActivity extends AppCompatActivity {
          pref = getApplicationContext().getSharedPreferences(RequestActivity.MyPREFERENCES, 0);
         setContentView(R.layout.activity_order_details);
 
+        int pos = getIntent().getExtras().getInt("position");
+
 
         addressView = (TextView) findViewById(R.id.order_address_field);
         contactNoView = (TextView) findViewById(R.id.order_contact_field);
         itemsCountView = (TextView) findViewById(R.id.order_item_count_field);
         approxWeightView = (TextView) findViewById(R.id.order_approx_weight_field);
+
+
+
 
         confirmButton = (Button) findViewById(R.id.confirm_order_bt);
         rejectButton = (Button) findViewById(R.id.order_reject_bt);
@@ -66,8 +71,14 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
 
         Gson gson = new GsonBuilder().create();
-        ArrayList<ArrayList<String>> list = gson.fromJson(pref.getString("request_data", null), new TypeToken<ArrayList<RequestData>>() {}.getType());
+        ArrayList<RequestData> list = gson.fromJson(pref.getString("request_data", null), new TypeToken<ArrayList<RequestData>>() {}.getType());
         Log.e(OrderDetailsActivity.class.toString(), ""+ list.size());
+
+        addressView.setText(list.get(pos).getAddress());
+        contactNoView.setText(list.get(pos).getContactNo());
+        itemsCountView.setText(list.get(pos).getApproxWeight());
+        approxWeightView.setText(list.get(pos).getApproxWeight());
+
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override

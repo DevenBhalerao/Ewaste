@@ -42,13 +42,13 @@
                 android:text="Address: " />
 
             <TextView
-                android:id="@+id/request_fragment_Items_Weight_label"
+                android:id="@+id/request_fragment_Items_Count_label"
                 android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/request_fragment_Address_label"
                 android:layout_below="@+id/request_fragment_Address_label"
                 android:layout_marginTop="21dp"
-                android:text="Items Weight : " />
+                android:text="Items Count : " />
 
 
 
@@ -69,11 +69,11 @@
                 android:layout_marginStart="17dp" />
 
             <TextView
-                android:id="@+id/request_fragment_Items_Weight_field"
+                android:id="@+id/request_fragment_Items_Count_field"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/request_fragment_Items_Weight_label"
-                android:layout_alignBottom="@+id/request_fragment_Items_Weight_label"
+                android:layout_alignBaseline="@+id/request_fragment_Items_Count_label"
+                android:layout_alignBottom="@+id/request_fragment_Items_Count_label"
                 android:layout_alignStart="@+id/request_fragment_Address_field"
                 android:layout_marginBottom="25dp"/>
 
@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/request_fragment_Items_Weight_label"
+                android:layout_below="@+id/request_fragment_Items_Count_label"
                 android:layout_marginEnd="20dp"
                 android:text="View"
                 android:textColor="#ffffff"
